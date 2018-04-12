@@ -8,7 +8,7 @@
     - [ ] Leer Kloukinas, Yovine. 2011. A model-based approach for multiple QoS in scheduling: from models to implementation. http://goo.gl/4xL1JT
 - [ ] Leer IEEE 1003.1/2008 POSIX http://goo.gl/k7WGnP
 ## 1b-scheduling
-- [ ] 32 páginas
+- [ ] 12/32 páginas
 
 # 2-sincronización entre procesos
 - [ ] 28 páginas
