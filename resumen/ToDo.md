@@ -3,7 +3,7 @@
 
 # 1-scheduling
 ## 1a-procesos y API
-- [x] 30 págiinas
+- [x] 30 páginas
 - [ ] Leer costo y prevención (cambio e contexto)
     - [ ] Leer Kloukinas, Yovine. 2011. A model-based approach for multiple QoS in scheduling: from models to implementation. http://goo.gl/4xL1JT
 - [ ] Leer IEEE 1003.1/2008 POSIX http://goo.gl/k7WGnP
@@ -13,6 +13,9 @@
 
 # 2-sincronización entre procesos
 - [ ] 28 páginas
+	- [ ] Completar Read-Modify-Write Atómicos
+	- [ ] Revisar Errores de sincronización
+	- [ ] Revisar semáforo (son atómicos?)
 
 # 3-sincronizacion entre procesos
 ## 3.1-sincronizacion entre procesos (2)
