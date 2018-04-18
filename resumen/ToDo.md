@@ -12,14 +12,14 @@
 	- [ ] Leer bibliografía adicional (no se cual es)
 
 # 2-sincronización entre procesos
-- [ ] 28 páginas
+- [x] 28 páginas
 	- [ ] Completar Read-Modify-Write Atómicos
 	- [ ] Revisar Errores de sincronización
 	- [ ] Revisar semáforo (son atómicos?)
 
 # 3-sincronizacion entre procesos
 ## 3.1-sincronizacion entre procesos (2)
-- [ ] 22 páginas
+- [ ] 13/22 páginas
 ## 3.2-sincronizacion entre procesos (3)
 - [ ] 17 páginas
 

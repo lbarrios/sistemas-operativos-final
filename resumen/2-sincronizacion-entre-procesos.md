@@ -180,8 +180,72 @@ liberar el lock.
 	- Preventivo (antes que ocurra)
 	- Recuperación (deadlock recovery)
 
+## Modelo teórico
 
-# Bibliografía
+```
+R ->try-> T ->crit-> C ->exit-> E
+ ^                             /
+  \___________________________/
+
+```
+
+- Estado: σ : [0 ... N−1] → {R,T, C, E}
+- Transición: σ → σ', l ∈ {rem, try, crit, exit}
+- Ejecución: τ = τ_0 → τ_1 ...
+- Garantizar PROP: ==Toda ejecución satisface PROP==
+- Notación: #S = cantidad de elementos del conjunto S
+
+### Propiedades
+
+#### Exclusión Mutua (EXCL)
+> Para toda ejecución T y estado T_k, no puede 
+> haber más de un proceso i tal que T_k(i) = C.
+
+- #CRIT ≤ 1
+
+#### Progreso (PROG)
+> Para toda ejecución τ y estado τ_k, 
+> si en τ_k hay un proceso i en T y ningún i' en C, 
+> entonces ∃j > k tal que en el estado τj 
+> algún proceso i' está en C.
+
+- (#TRY ≥ 1 ∧ #CRIT = 0 =⇒ ♦#CRIT > 0)
+
+#### Progreso global absoluto (WAIT-FREE)
+> Para toda ejecución τ, estado τ_k y proceso i,
+> si τ_k (i) = T
+> entonces ∃j > k, tal que τ_j(i) = C
+
+- ∀i. IN(i)
+- IN(i): TRY (i) ⇒ ♦ CRIT(i)
+
+#### Progreso global dependiente (G-PROG)
+(deadlock-, lockout-, o starvation-free)
+> Para toda ejecución τ,
+> si para todo estado τ_k y proceso i tal que τ_k(i) = C,
+> ∃j > k, tal que τ_j(i) = R
+> entonces para todo estado τ_k' y todo proceso i',
+> si τ_k'(i') = T
+> entonces ∃j' > k' tal que τ_j'(i) = C.
+
+- ∀i. OUT(i) ⇒ ∀i. IN(i)
+- OUT(i): CRIT(i) ⇒ ♦ REM(i)
+
+#### Justicia (FAIR) (fairness)
+> Para toda ejecución τ y todo proceso i,
+> si i puede hacer una transición L_i en una cantidad
+> infinita de estados de τ
+> entonces existe un k tal que τ_k →(L_i)→ τ_{k+1}.
+
+#### Observaciones
+
+- EXCL es una propiedad de safety: nada malo pueda pasar nunca.
+- PROG, G-PROG y WAIT-FREE son propiedades de liveness: algo bueno debe pasar en el futuro.
+- FAIR se asume: debe ser garantizada por el scheduler
+- No hacer nada garantiza safety.
+- Siempre hay que tener ambas propiedades.
+
+## Bibliografía
 
 - Hoare, C. Monitors: an operating system structuring concept, Comm. ACM 17 (10): 549-557, 1974. http://goo.gl/eVaeeo
 - M. Herlihy, N. Shavit. The Art of Multiprocessor Programming. Morgan Kaufmann, 2008.
