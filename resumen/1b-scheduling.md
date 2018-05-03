@@ -1,9 +1,9 @@
-#Scheduling
-##Políticas de Scheduling
+# Scheduling
+## Políticas de Scheduling
 - Parte ==fundamental== de un Sistema Operativo.
 - Muy importante ==optimizar==.
 
-##Objetivos
+## Objetivos
 - ==Ecuanimidad / Justicia==: recibir **dosis "justas"** de CPU.
 - ==Eficiencia==: que la **CPU no desperdicie** recursos.
 - ==Carga del sistema==: **cantidad** de procesos en espera.
@@ -13,7 +13,7 @@
 - ==Rendimiento== (_Throughput_): número de **procesos terminados** por tiempo
 - ==Liberación de Recursos==: **liberar** rápidamente los recursos.
 
-###Soluciones de Compromiso
+### Soluciones de Compromiso
 > Cada política va a intentar __maximizar__ uno o más 
 > __objetivos__, y __minimizar el impacto__ en el resto.
 
