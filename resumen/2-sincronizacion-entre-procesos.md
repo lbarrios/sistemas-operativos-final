@@ -36,7 +36,7 @@ y es necesario utilizar hardware adicional.
 > Este es un mecanismo provisto por el procesador, de forma 
 > que resulta ==atómico/indivisible y libre de bloqueos==.
 
-```c++
+```
 private atomic <bool> reg;
 atomic bool get () {return reg;}
 atomic void set(bool b) {reg = b;}
@@ -59,7 +59,7 @@ atomic bool testAndSet () {
 - la espera no es acotada
 
 
-```c++
+```
 public class TASLock {
     private atomic <bool > reg;
     public void create () {
@@ -88,8 +88,7 @@ que el de usar semáforos.==
 - Poner un sleep() en el cuerpo del while
 	- poco tiempo -> desperdicia CPU
 	- mucho tiempo -> mucha espera
-
-```c++
+```
 void lock (time delay) {
     while (reg.testAndSet()) {sleep(delay);}
 }
@@ -105,7 +104,7 @@ antes de intentar el lock (ver TTAS-Lock)
 > de forma tal que sólamente cuando el get() devuelva falso, se 
 > intentará hacer el TAS.
 
-```c++
+```
 void create() {
     mutex.set(false);
 }
@@ -132,7 +131,7 @@ void unlock() {
 ### Otros objetos atómicos
 > Read-Modify-Write Atómicos
 
-```c++
+```
 /**
  * Obtiene un valor y lo incrementa en 1
  * (devuelve el valor original)
@@ -195,7 +194,7 @@ atomic bool dequeue(T *pitem) {
 - ==wait()== (P() o down()): Esperar hasta que se pueda entrar.
 - ==signal()== (V() o up()): Salir y dejar entrar a alguno.
 
-```c++
+```
 void wait () {
 // adquirir lock del kernel
     
@@ -365,10 +364,13 @@ R ->try-> T ->crit-> C ->exit-> E
 ## Bibliografía
 
 - Hoare, C. Monitors: an operating system structuring concept, Comm. ACM 17 (10): 549-557, 1974. http://goo.gl/eVaeeo
+- Allen B Downey. The Little Book of Semaphores. http://goo.gl/ZB9zYl
+- Edgar W. Dijkstra. Cooperating sequential processes. https://goo.gl/PqDzpm
 - M. Herlihy, N. Shavit. The Art of Multiprocessor Programming. Morgan Kaufmann, 2008.
 - N. Lynch. Distributed Algorithms. Morgan Kaufmann, 1996.
 - Ch. Kloukinas, S. Yovine. A model-based approach for multiple QoS in scheduling: from models to implementation. Autom. Softw. Eng. 18(1): 5-38 (2011). https://goo.gl/5FuU6x
 - M. C. Rinard. Analysis of Multithreaded Programs. SAS 2001: 1-19 http://goo.gl/pyfg0G
 - L. Sha, R. Rajkumar, J. P. Lehoczky. Priority Inheritance Protocols: An Approach to Real-Time Synchronization. IEEE Transactions on Computers, September 1990, pp. 1175-1185. http://goo.gl/0Qeujs
+
 - Valgrind tool. http://valgrind.org/
 - Java Pathfinder (JPF). http://babelfish.arc.nasa.gov/trac/jpf
