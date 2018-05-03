@@ -1,22 +1,43 @@
 # Sincronización entre Procesos
 Ver qué pasa cuando se tienen ejecuciones Secuenciales vs Concurrentes. 
+
 ¿Da lo mismo la forma en que se ejecutan los procesos?
+
+- ==contención==: dos procesos quieren acceder al mismo recurso
+- ==concurrencia==: dos procesos se ejecutan de forma simultánea
 
 ## Condición de carrera (Race Condition)
 > Fenómeno en donde los resultados varían 
 > según en qué orden se ejecuten las cosas.
 
-Solución: Garantizar ==Exclusión Mutua==
+Solución: Garantizar ==Exclusión Mutua== 
+mediante ==secciones críticas== (CRIT).
 
 ## Mecanismos de Sincronización
 
+### Sección Crítica
+Es un pedazo de código tal que se cumple
+
+- sólo hay un proceso en CRIT
+- todo proceso esperando para CRIT va a entrar
+- ningún proceso fuera de CRIT puede bloquear a otro
+
+Un proceso puede:
+
+- entrar a la sección crítica
+- salir de la sección crítica
+
+Generalmente, se resuelve mediante locks 
+(booleanos indicando si la sección está bloqueada) 
+y es necesario utilizar hardware adicional.
+
 ### Test-And-Set
-Se lee la variable, y al mismo tiempo se la setea en true. 
-Este es un mecanismo provisto por el procesador, de forma 
-que resulta ==atómico/indivisible y libre de bloqueos==.
+> Se lee la variable, y al mismo tiempo se la setea en true. 
+> Este es un mecanismo provisto por el procesador, de forma 
+> que resulta ==atómico/indivisible y libre de bloqueos==.
 
 ```
-private atomic <bool > reg;
+private atomic <bool> reg;
 atomic bool get () {return reg;}
 atomic void set(bool b) {reg = b;}
 atomic bool getAndSet (bool b) {
@@ -29,12 +50,12 @@ atomic bool testAndSet () {
 }
 ```
 
-### TAS-Lock (Test-And-Set Lock)
-Se utiliza la variable como un lock, y se hace TAS 
-mediante ==Busy Waiting== hasta que el valor leído
-sea falso (o sea, que se libere el lock).
+### TAS-Lock (Test-And-Set Lock) (spin lock)
+> Se utiliza la variable como un lock, y se hace TAS 
+> mediante ==Busy Waiting== hasta que el valor leído
+> sea falso (o sea, que se libere el lock).
 
-- no es atómico
+- **no es atómico**
 - la espera no es acotada
 
 
@@ -53,58 +74,113 @@ public class TASLock {
 }
 ```
 
-Soluciones al Busy Waiting:
+#### Problema: Busy Waiting
+> El código se la pasa intentando obtener 
+> el lock de una ==forma agresiva==.
 
-- Poner un sleep() en el cuerpo del while:
+- consume muchísima CPU
+- **perjudica al resto de los procesos**
+- ==Su overhead, sin embargo, puede ser menor
+que el de usar semáforos.==
+
+#### Soluciones al Busy Waiting
+
+- Poner un sleep() en el cuerpo del while
+	- poco tiempo -> desperdicia CPU
+	- mucho tiempo -> mucha espera
 ```
 void lock (time delay) {
     while (reg.testAndSet()) {sleep(delay);}
 }
 ```
 
-- No iterar sobre TestAndSet() (ver TTAS-Lock)
+- No iterar sobre TestAndSet(), es decir, testear 
+antes de intentar el lock (ver TTAS-Lock)
 
-### TTAS-Lock (Test and Test-And-Set Lock)
-El protocolo de Test-And-Set es complejo, y requiere bloquear 
-la memoria para escritura. En vez de hacer spin (busy waiting)
-sobre la instrucción TAS, se hace sobre la instrucción get(), 
-de forma tal que sólamente cuando el get() devuelva falso, se 
-intentará hacer el TAS.
+### TTAS-Lock (Test and Test-And-Set Lock) (local spinning)
+> El protocolo de Test-And-Set es complejo, y requiere bloquear 
+> la memoria para escritura. En vez de hacer spin (busy waiting)
+> sobre la instrucción TAS, se hace sobre la instrucción get(), 
+> de forma tal que sólamente cuando el get() devuelva falso, se 
+> intentará hacer el TAS.
 
 ```
+void create() {
+    mutex.set(false);
+}
+
 void lock () {
     do {
-        while (reg.get()){} // busy waiting
-    } while (!reg.testAndSet());
+        while (mutex.get()){
+            // busy waiting
+        }
+    } while (!mutex.testAndSet());
+}
+
+void unlock() {
+    mutex.set(false);
 }
 ```
 
-Tiene más escalabilidad que TAS-Lock
+==Tiene más eficiencia/escalabilidad que TAS-Lock==
 
+- El while hace get() en lugar de testAndSet()
 - ==Caché hit== mientras el get es true
 - ==Caché miss== cuando hay un unlock
 
-### Read-Modify-Write Atómicos
-
-==TODO: Completar esta sección==
+### Otros objetos atómicos
+> Read-Modify-Write Atómicos
 
 ```
+/**
+ * Obtiene un valor y lo incrementa en 1
+ * (devuelve el valor original)
+ */
 atomic int getAndInc () {
     int tmp = reg;
     reg ++;
     return tmp;
 }
 
+/**
+ * Obtiene un valor y le suma un entero
+ * (devuelve el valor original)
+ */
 atomic int getAndAdd (int v) {
     int tmp = reg;
     reg = reg + v;
     return tmp;
 }
 
+/**
+ * Compara contra el primer parámetro, si es igual
+ * lo cambia por el segundo parámetro.
+ * (devuelve el valor original)
+ */
 atomic T compareAndSwap (T u, T v) { // CAS
     T tmp = reg;
     if (u == tmp) reg = v;
     return tmp;
+}
+
+atomic enqueue(T item) {
+    mutex.lock();
+    queue.push(item);
+    mutex.unlock();
+}
+
+atomic bool dequeue(T *pitem) {
+    bool success;
+    mutex.lock();
+    if (queue.empty) {
+        pitem = null;
+        success = false;
+    } else {
+        pitem = queue.pop();
+        success = true;
+    }
+    mutex.unlock();
+    return success;
 }
 ```
 
@@ -144,8 +220,47 @@ void signal () {
 }
 ```
 
-## Errores de sincronización
-==TODO: Revisar esta sección==
+### Mutex
+> MUTual EXclusion
+
+Se puede ver como un semáforo que sólamente toma
+los valores 0 o 1.
+
+## Modelo Coffmann (para detectar Deadlock)
+> Serie de condiciones necesarias
+> para la existencia de un deadlock
+
+- Exclusión Mutua: existe un recurso que no puede 
+ser asignado a más de un proceso
+- Hold and Wait: los procesos pueden retener un recurso 
+y solicitar otro
+- No preemption: no hay un mecanismo compulsivo para
+quitarle los recursos a un proceso
+- Espera circular: Tiene que haber un ciclo de N>=2
+procesos, tal que P_i espera un recurso de P_i+1
+
+## Modelo de Grafos Bipartitos (para detectar Deadlock)
+> Hay deadlock cuando hay un ciclo
+
+- Procesos: nodos P
+- Recursos: nodos R
+- Aristas: 
+	- **P->R** si P ==solicita== R
+	- **R->P** si P ==adquirió== R
+
+```
+Ejemplo de deadlock
+
+     P1
+   /   <
+  <     \
+R2       R1
+  \     >
+   >   /
+     P2
+```
+
+## Problemas de sincronización
 
 - Race condition (condición de carrera)
 El resultado no corresponde a ninguna secuencialización.
@@ -179,6 +294,7 @@ liberar el lock.
 - En tiempo de ejecución
 	- Preventivo (antes que ocurra)
 	- Recuperación (deadlock recovery)
+
 
 ## Modelo teórico
 
