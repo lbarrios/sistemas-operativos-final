@@ -153,3 +153,8 @@ Repositorio para estudiar para el final de Sistemas Operativos
 
 ## Sistemas distribuidos
 * Distributed Algorithms. Nancy A. Lynch. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA. 1996.
+
+
+# Bibliografía
+
+* https://warwick.ac.uk/fac/sci/physics/research/condensedmatt/imr_cdt/students/david_goodwin/teaching/operating_systems/
