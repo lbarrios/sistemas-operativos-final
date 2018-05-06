@@ -113,12 +113,11 @@ Repositorio para estudiar para el final de Sistemas Operativos
 * Microkernels
 * Virtualización
 
-# Bibliografía
-
+# Bibliografía Recomendada
 
 ## General
 * Modern Operating Systems, Andrew S. Tanenbaum.
-* Operating Systems Concepts, Abraham Silberschatz & Peter B. Galvin.
+* [Operating Systems Concepts, Abraham Silberschatz & Peter B. Galvin.](bibliografia/Silberschatz_-_Operating_System_Concepts_9th-2012.pdf)
 
 ## Concurrencia
 * Multithreaded Programming With PThreads, Bil Lewis, Daniel J. Berg, Sun Microsystems Press.
@@ -155,6 +154,5 @@ Repositorio para estudiar para el final de Sistemas Operativos
 * Distributed Algorithms. Nancy A. Lynch. Morgan Kaufmann Publishers Inc., San Francisco, CA, USA. 1996.
 
 
-# Bibliografía
-
-* https://warwick.ac.uk/fac/sci/physics/research/condensedmatt/imr_cdt/students/david_goodwin/teaching/operating_systems/
+# Bibliografía adicional
+* [Warwick University - Operating Systems Lectures](https://warwick.ac.uk/fac/sci/physics/research/condensedmatt/imr_cdt/students/david_goodwin/teaching/operating_systems/)
