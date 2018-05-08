@@ -1,10 +1,18 @@
 # 0 - Introducción
 
-## Hardware Vs Software
+## Hardware Vs Software (SBZ-1.2.1)
 División de los sistemas informáticos entre **Hardware < - > Software**. El sistema operativo es el **intermediario** entre ellos:
 
-- **Visión del usuario**: Para que el software no se tenga que preocupar de detalles de bajo nivel.
-- **Visión del fabricante**: Para que el hardware no se vea afectado por un mal uso por parte del software.
+- **Visión del usuario**: Para que el software no se tenga que preocupar de detalles de bajo nivel. Los distintos contextos de uso van a requerir distintos objetivos a cumplir por el sistema operativo.
+	- Computadoras de escritorio de un solo usuario: se prioriza la ==facilidad de uso==, seguido de la performance, pero no se le da prioridad a la utilización de recursos.
+	- Workstations que pertenecen a una red: tienen recursos dedicados indivualmente, se intenta buscar un ==equilibrio entre la usabilidad y el acceso a los recursos== locales vs el acceso compartido a los recursos de red.
+	- Terminales conectadas a un Mainframe: los usuarios no tienen recursos individuales, por lo que se intenta ==maximizar la utilización de recursos== (uso eficiente de CPU, memoria, IO, etc).
+	
+- **Visión del fabricante**: Para que el hardware no se vea afectado por un mal uso por parte del software. El sistema operativo cumpliría las siguientes funciones:
+
+	- Administrador de ==recursos== (CPU, memoria, IO).
+	- Resolución de ==problemas de contención==.
+	- ==Controlador== de dispositivos y programas.
 
 ## Historia - Sistemas Batch
 - Antes las computadoras costaban millones, y estaban en ambientes dedicados.
@@ -30,4 +38,44 @@ Un sistema operativo hace de intermediario entre el hardware y los programas del
 
 Tiene que manejar la contención y la concurrencia de forma de buscar un **balance óptimo entre el rendimiento y la correctitud**.
 
-Al ser el programa más importante, corre con máximos privilegios (nivel 0).
+Al ser el programa más importante, corre con máximos privilegios (nivel 0), entendiendo al sistema operativo como el Kernel (programa más importante).
+
+También, según la definición, se pueden llegar a considerar los ==programas de sistema== (ejemplo, programas de configuración, drivers, etc), e incluso a veces los ==programas de aplicación== (ej, editores, compiladores, etc) como parte integral del Sistema Operativo.
+
+### Organización
+
+#### Distribución básica de una computadora:
+```
+                                   printer
+                          keyboard  /
+                         mouse  |  /
+                              \ | /
+          Disks                \|/                   Monitor
+            |                   |                       |
+CPU    Disk Controller    USB Controller        Graphics Adapter
+ |          |                   |                       |
+ --------------------------------------------------------
+                      |
+                    Memory
+```
+
+#### Arranque de una PC (Unix-like) (SBZ-1.2.1)
+
+1. Bootstrap Program: Programa muy pequeño alojado en la ROM (EEPROM/Firmware), que inicializa el sistema (CPU, dispositivos, memoria) y se encarga de buscar y cargar el sistema operativo (Kernel) en memoria.
+
+2. Kernel: Programa que provee servicios a los demás programas (ya sean de sistema o de usuario). 
+	- En ocasiones, algunos de estos servicios son provistos por programas por fuera del propio Kernel (ejemplo daemons, servicios de sistema), o por programas que se incrustan como parte del Kernel (ejemplo Drivers).
+
+3. Se carga el primer servicio/proceso de sistema (init), y este se encarga de cargar otros programas (ejemplo daemons).
+	- A partir de este punto, el sistema operativo queda en estado de "esperando que sucedan eventos".
+
+4. Cada vez que exista una interrupción o un system call (syscall, monitor call), esto es un evento que el sistema operativo "atiende". 
+	- Las interrupciones pueden ser llamadas desde hardware (a través de señales a la CPU) o desde software (a través de instrucciones específicas).
+	- La forma de atender estas interrupciones es mediante una función global de atención de interrupciones (lento), o mediante una tabla que describa las distintas rutinas de atención de interrupciones (interrupt vector). Existe una cantidad limitada de interrupciones (IRQs), y cada dispositivo se conecta unívocamente a una de ellas.
+	- Cuando un sistema operativo atiende una interrupción, el estado actual de la CPU (ejemplo el Instruction Pointer, y en ocasiones los flags, los registros) es guardado (generalmente en la pila), y al terminar la interrupción todo debe ser restaurado a su estado original.
+
+#### Almacenamiento (SBZ-1.2.2)
+
+La CPU sólo puede correr instrucciones o cargar datos desde la memoria principal (RAM), así que cualquier programa que se desee correr debe ser previamente cargado allí.
+
+Cualquier tipo de memoria puede ser pensado como un **array de bytes**, en donde **cada byte tiene su propia dirección**, y toda interacción puede ser vista como una **secuencia de LOAD y STORE**.
