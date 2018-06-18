@@ -35,11 +35,25 @@ PCB con threads:
 
 ### Proponga un escenario en donde un proceso requiera la modificación de algún valor de la PCB. Escriba el pseudocódigo de las rutinas para realizar ese cambio y quién (SO o proceso) es responsable de cada una.
 
-==TODO:==
+El proceso no puede realizar la modificación del PCB, sino de forma indirecta a través de **llamados al sistema operativo**, o mediante la modificación del propio estado del programa (ejemplo registros).
+
+Ejemplo: el proceso quiere abrir un archivo.
+
+1. Se ponen en los registros del procesador los parámetros adecuados (ejemplo: eax=OPEN, ebx=filename).
+2. Se llama a INT 80.
+3. El sistema operativo busca el archivo correspondiente, realiza todas las verificaciones necesarias (ejemplo, que el proceso tenga permisos para abrir ese archivo).
+    * Si todo está bien, el Sistema Operativo modifica la PCB del proceso agregando un descriptor de ese archivo, indexado por un número entero (ej, si el último descriptor abierto es el 5, lo agrega en el 6).
+    * Si hay algún problema, retorna un código de error.
+4. Se retorna del syscall, devolviendo el resultado de la operación (el índice del descriptor del archivo, o el código de error).
+5. El proceso puede utilizar el archivo abierto a través de posteriores llamadas al sistema, refiriéndose al mismo a través del descriptor provisto previamente.
+
+Es notable que la modificación del PCB se realizó de forma transparente al proceso.
 
 ### En Unix/Linux los procesos no pueden acceder a puertos de entrada/salida directamente, salvo que explícitamente se le de permiso. ¿Cómo podría implementarse?
 
-==TODO:==
+El manual de intel detalla un campo IOMAP en la TSS de una tarea, que sirve para definir para cada puerto de IO si se van a chequear los privilegios (bit en 1) o no (bit en 0) al querer usar las instrucciones IN/OUT. Usando este mecanismo, la forma de darle permisos explícitos a una tarea (o sea, a un proceso) de acceder directamente a un puerto de IO, sería modificando el bit correspondiente en el IOMAP de su TSS.
+
+==No sé si la pregunta apunta a esto==
 
 ### ¿Qué son las funciones reentrantes y cuál es su relación con los threads? Dar dos ejemplos de transición de running a ready.
 
@@ -47,11 +61,15 @@ PCB con threads:
 
 ### Se puede ir directo de waiting a running? Explicar las razones.
 
-==TODO:==
+En principio, según el modelo tradicional de estados, la respuesta sería que no, ya que el mismo establece que cuando un proceso está waiting, y se libera, debe pasar a running.
+
+De cualquier modo, nada impide que un proceso pueda pasar de waiting a running bajo determinadas condiciones. Ejemplo, en un sistema en donde se puedan marcar determinados procesos como "urgentes", sería posible que cuando un proceso esté waiting, y se libere el recurso que lo estaba bloqueando, este pase de forma inmediata a running (desalojando a cualquier proceso que esté corriendo en ese momento). También podría suceder que no hubiera ningún proceso en estado running, por lo que más allá de la máquina de estados, se podría considerar que el proceso pasaría directamente a running.
 
 ### Cuál es la diferencia entre mode switch y context switch?
 
-==TODO:==
+El cambio de contexto es cuando se cambia el contexto de ejecución del procesador. Es uno de los mecanismos que provee el procesador (al menos en el caso de IA-32) para administración de tareas. En el caso de Linux, por cuestiones históricas y de compatibilidad, dicho mecanismo está implementado por software, es decir, el cambio de contexto se hace a mano, en este caso mediante los PCB. Cuando se quiere cambiar de un proceso a otro, se guarda el estado actual del proceso (registros, IP, etc) en el PCB de ese proceso, y se carga el estado del otro proceso a partir del PCB correspondiente.
+
+El cambio de modo es cuando se cambia el modo de ejecución, pasando de modo usuario a modo kernel (cambio de privilegios). Esto no implica necesariamente un cambio de contexto, aunque a veces van acompañados.
 
 ### Dibujar el mapa de memoria de un proceso.
 
@@ -59,14 +77,14 @@ PCB con threads:
 
 ### Qué pasa con la memoria cuando se crea un proceso hijo? Explicar los casos de fork() y vfork().
 
-==TODO:==
+Cuando se crea un proceso hijo, en el caso de fork se copia completamente el proceso padre (registros, espacio de memoria, descriptores de archivos, etc), y en lo que respecta al espacio de memoria particularmente, se crea uno nuevo, que es una copia del del proceso padre; es decir, se copia todo el directorio de páginas, junto con las tablas de paǵinas, y el contenido de las páginas en sí (lo cual puede llegar a ser bastante lento), manteniendo las direcciones virtuales, pero usando nuevas direcciones físicas. Cuando se hace vfork, en cambio, se crea una copia del proceso padre, pero el espacio de memoria no se copia, sino que se toma prestado el del padre. Normalmente, en el caso de vfork, se espera que se realice una llamada a exec, o exit, sin utilizar realmente el espacio de memoria del padre, ya que de lo contrario se puede llegar a producir comportamiento indefinito.
 
 ### Qué es Copy on Write? Cómo funciona en sistemas con Paginación?
 
 ==TODO:==
 
 ### ¿Cuántas veces imprime "Hello, world!" el siguiente programa? Explicar. ¿Qué pasa si se usa vfork() en lugar de fork()?
-```
+```c++
 foo () {
  int i;
  for(i = 0; i<3; i++) fork();
