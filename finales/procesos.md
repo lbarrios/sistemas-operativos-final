@@ -97,18 +97,54 @@ Es decir, en los procesadores que soportan mecanismos de CopyOnWrite, la diferen
 
 ### Qué es Copy on Write? Cómo funciona en sistemas con Paginación?
 
-==TODO:==
+Copy on Write es un mecanismo provisto por el procesador / la MMU mediante el cual se pueden duplicar páginas sin necesidad de copiarlas (lo cual es lento), por ejemplo para ser utilizado cuando un proceso hace un fork. Entonces, sólamente se realiza la copia de una página cuando el proceso hijo intenta escribir en ella. Si, en cambio, intenta leer de una página, o ni siquiera la utiliza, la página efectivamente mapeada es la del padre.
+
+Este mecanismo está fuertemente relacionado con paginación, ya que por lo general la forma de implementarlo es duplicando el mapa de memoria (Page Directory, Page Tables) del proceso, y marcando todas las páginas como de "solo lectura". En cuanto el proceso hijo intenta realizar una escritura, se produce una excepción en el procesador (eg: Page Fault), y la rutina de atención se encarga de copiar la página a una dirección física distinta, y marcarla como de lectura-escritura. Luego, se retorna al proceso, y la escritura se realiza sin problemas. Todo esto sucede de forma transparente al proceso.
 
 ### ¿Cuántas veces imprime "Hello, world!" el siguiente programa? Explicar. ¿Qué pasa si se usa vfork() en lugar de fork()?
 ```c++
 foo () {
- int i;
- for(i = 0; i<3; i++) fork();
- printf("Hello, world!\n");
+    int i;
+    for(i = 0; i<3; i++) fork();
+    printf("Hello, world!\n");
 }
 ```
 
-==TODO:==
+**Versión con FORK**: 8 veces.
+
+i=0:
+    p1.fork() -> p2.
+i=1:
+    p1.fork() -> p3.
+    p2.fork() -> p4.
+i=2:
+    p1.fork() -> p5.
+    p2.fork() -> p6.
+    p3.fork() -> p7.
+    p4.fork() -> p8.
+i=3:
+    p1.printf("...")
+    p2.printf("...")
+    p3.printf("...")
+    p4.printf("...")
+    p5.printf("...")
+    p6.printf("...")
+    p7.printf("...")
+    p8.printf("...")
+
+**Versión con VFORK**: 4 veces.
+
+i=0:
+    p1.vfork() -> p2.
+i=1:
+    p2.vfork() -> p3.
+i=2:
+    p3.vfork() -> p4.
+i=3:
+    p4.printf("...")
+    p3.printf("...")
+    p2.printf("...")
+    p1.printf("...")
 
 ### Elegir una primitiva de sincronización para los siguientes casos y justificar su elección. 
 
