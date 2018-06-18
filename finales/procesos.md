@@ -77,7 +77,9 @@ El cambio de modo es cuando se cambia el modo de ejecución, pasando de modo usu
 
 ### Qué pasa con la memoria cuando se crea un proceso hijo? Explicar los casos de fork() y vfork().
 
-Cuando se crea un proceso hijo, en el caso de fork se copia completamente el proceso padre (registros, espacio de memoria, descriptores de archivos, etc), y en lo que respecta al espacio de memoria particularmente, se crea uno nuevo, que es una copia del del proceso padre; es decir, se copia todo el directorio de páginas, junto con las tablas de paǵinas, y el contenido de las páginas en sí (lo cual puede llegar a ser bastante lento), manteniendo las direcciones virtuales, pero usando nuevas direcciones físicas. Cuando se hace vfork, en cambio, se crea una copia del proceso padre, pero el espacio de memoria no se copia, sino que se toma prestado el del padre. Normalmente, en el caso de vfork, se espera que se realice una llamada a exec, o exit, sin utilizar realmente el espacio de memoria del padre, ya que de lo contrario se puede llegar a producir comportamiento indefinito.
+Cuando se crea un proceso hijo, en el caso de fork se copia completamente el proceso padre (registros, espacio de memoria, descriptores de archivos, etc), y en lo que respecta al espacio de memoria particularmente, se crea uno nuevo, que es una copia del del proceso padre; es decir, se copia todo el directorio de páginas, junto con las tablas de paǵinas, y el contenido de las páginas en sí (lo cual puede llegar a ser bastante lento), manteniendo las direcciones virtuales, pero usando nuevas direcciones físicas. 
+
+Cuando se hace vfork, en cambio, se crea una copia del proceso padre, pero el espacio de memoria no se copia, sino que se toma prestado el del padre. Normalmente, en el caso de vfork, se espera que se realice una llamada a exec, o exit, sin utilizar realmente el espacio de memoria del padre, ya que de lo contrario se puede llegar a producir comportamiento indefinito.
 
 `man vfork` tiene información útil:
 
@@ -86,9 +88,12 @@ Cuando se crea un proceso hijo, en el caso de fork se copia completamente el pro
 * Historic description: Under Linux, fork(2) is implemented using copy-on-write pages, so the only penalty incurred by fork(2) is the time and memory required to duplicate  the  parent's  page  tables,  and to create a unique task structure for the child.  However, in the bad old days a fork(2) would require making a complete copy of the caller's data space, often needlessly, since usually immediately afterward an exec(3) is done.  Thus, for greater efficiency, BSD introduced the vfork()  system call,  which did not fully copy the address space of the parent process, but borrowed the parent's memory and thread of control until a call to execve(2) or an exit occurred.  The parent process was suspended while the child was using its resources.  The use of vfork() was tricky:  for  example,  not  modifying data in the parent process depended on knowing which variables were held in a register.
 
 **NOTES**
+
 Some consider the semantics of vfork() to be an _architectural blemish_, and the 4.2BSD man page stated: "This system call will be eliminated when proper system sharing mechanisms are implemented. Users should not depend on the memory sharing semantics of vfork() as it will, in that case, be made synonymous to fork(2)."
 
 ![<esta grasa no se quita.jpg>](img/vfork.jpg  "vfork")
+
+Es decir, en los procesadores que soportan mecanismos de CopyOnWrite, la diferencia de performance entre vfork y fork se vuelve despreciable, ya que el espacio de memoria del padre no se copia, sino sólamente para aquellas páginas que se modifiquen.
 
 ### Qué es Copy on Write? Cómo funciona en sistemas con Paginación?
 
