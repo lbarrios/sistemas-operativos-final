@@ -145,13 +145,3 @@ i=3:
     p3.printf("...")
     p2.printf("...")
     p1.printf("...")
-
-### Elegir una primitiva de sincronización para los siguientes casos y justificar su elección. 
-
-    Sincronizar procesos para: 
-
-      1. acceso exclusivo a disco 
-      2. acceso a una estructura que soporta hasta 3 procesos concurrentes
-      3. acceso exclusivo a un contador que se quiere incrementar.
-
-==TODO:==
