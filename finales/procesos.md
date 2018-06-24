@@ -145,3 +145,11 @@ i=3:
     p3.printf("...")
     p2.printf("...")
     p1.printf("...")
+
+
+### Se tienen dos procesadores y se pueden ver los cambios de estados de los procesos. ¿Qué tendría que ver para que se aumente el rendimiento agregando...
+
+    1. ...un procesador adicional?
+    2. ...memoria?
+
+==TODO:==

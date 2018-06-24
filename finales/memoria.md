@@ -13,3 +13,7 @@
 ### Defina thrashing y fragmentación, y enuncie para cada caso una solución, con sus ventajas y desventajas.
 
 ==TODO:==
+
+### Describir los atributos de las páginas y para qué se usan. ¿Es posible que haya páginas compartidas? ¿En qué caso?
+
+==TODO:==

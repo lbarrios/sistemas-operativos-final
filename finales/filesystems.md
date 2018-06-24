@@ -9,3 +9,7 @@
 ### Comparar FAT vs INODOS para la facilidad de hacer un backup total de un disco. Lo mismo para backup incremental.
 
 ==TODO:==
+
+### Se quiere implementar una funcionalidad de snapshots. ¿Qué sistema de archivos tomaría como base para hacerle los cambios necesarios (inodos o FAT) y cómo sería la implementación?
+
+==TODO:==

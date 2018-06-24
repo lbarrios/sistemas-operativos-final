@@ -33,3 +33,7 @@
 ### ¿Qué es el Hash de una vía? Dar 2 usos y justificar.
 
 ==TODO:==
+
+### ¿Qué problemas de seguridad se pueden solucionar con los canaries para buffer overflow? Dar las desventajas.
+
+==TODO:==

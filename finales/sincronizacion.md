@@ -106,3 +106,11 @@ while(1) {                  | while(1) {
     Si P1 empieza a ejecutar el código de P0, cambiando flag[0] por flag[1], ¿qué ocurriría?
 
 ==TODO:==
+
+### Proponer una primitiva de sincronización para cada caso y justificar:
+
+    1. Acceso exclusivo a disco
+    2. Estructura que permite hasta 3 accesos simultáneos
+    3. Contador que se quiere incrementar
+
+==TODO:==
