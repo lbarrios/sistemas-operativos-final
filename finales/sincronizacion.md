@@ -1,4 +1,4 @@
-### Elegir una primitiva de sincronización para los siguientes casos y justificar su elección. 
+﻿### Elegir una primitiva de sincronización para los siguientes casos y justificar su elección. 
 
     Sincronizar procesos para: 
 
@@ -26,11 +26,35 @@
 
 ### ¿Cuáles son las 4 condiciones de Koffman y para qué nos sirven?
 
-==TODO:==
+Las cuatro condiciones de koffman dicen las pre-condiciones necesarias para generar un deadlock. Sirven por que dan cuatro vectores potenciales para evitar deadlocks, cualquier estrategia que ataque uno de estos cuatro puntos garantiza que el sistema ande bien. 
+
+Las 4 condiciones son:
+
+* Exclusion Mutua: cuando se entra en una session critica, se toma posesion absoluta sobre ese recurso. No se puede compartir, a diferencia de, por ejemplo, una lectura. (donde varios procesos pueden leer la misma informacion)
+
+* Hold and request: Despues de pedir un recurso, el proceso pide un nuevo recurso sin soltar el anterior.
+
+* No preemption: No hay forma de desalojar los procesos una vez que estos tienen un recurso. Ese recurso sera del proceso hasta que este mismo decida soltarlo.
+
+* Dependencia circular: debe haber una dependencia circular entre procesos. Es decir, debe ser posible formar un ciclo entre los recursos ya pedidos de los procesos y los necesarios para que termine.
 
 ### ¿Por qué es necesaria la primitiva Test & Set para la implementación de semáforos? ¿Alcanza con la primitiva T&S en arquitecturas multiprocesador? En caso afirmativo justificar. En caso negativo, proponer una solución.
 
-==TODO:==
+La primitiva test and set le permite al procesador recibir un valor y modificarlo de forma atomica. Esto es necesario por que de ser una operacion que tome varios pasos, la operacion podria ser interrumpida en la mitad y esto generaria errores.
+
+Para tirar un ejemplo, supongamos que tenemos dos procesos, A y B, que quieren acceder al recurso x.
+
+Podria ocurrir que el proceso A despues de obtener el valor de x (x = 0) pero antes de setearlo en 1 es interrumpido por el scheduler. Entonces se pasa al proceso B, que obtiene el valor de x (x = 0), y lo setea en 1. El proceso B continua ejecutandose hasta que es nuevamente interrumpipdo por el scheduler SIN liberar el recurso x. Luego, el proceso A continua, seteando x en 1 (es decir, no cambia nada) y prosiguendo. Ambos procesos estan usando x. 
+
+Hay dos potenciales problemas con usar Test & Set en multiprocesador:
+
+==Potential Chamuyo Warning==  A. Los procesadores no comparten CACHE. Al trabajar, la primitiva Test & Set intentara leer el CACHE (y no la RAM), por lo cual podrian haber un error en el que dos procesos hagan test&set sobre variables que se encuentran en su respectivo CACHE.
+
+>  La forma de solucionar esto es forzando a que Test & Set trabaje sobre el RAM. El inconvenient de esta solucion es que seria mas lento implementar Test & Set. 
+
+>  Otra forma seria teniendo un CACHE separado para todos los procesadores, que trabaje con los Test & Set. El problema con esta solucion es que seria mas caro de implementar. (se requiere mas hardware)
+
+B. Si (A) esta resulto, todavia tenemos el problema que la operacion Test & Set podria no ser atomica en multi processadores. Es decir, si hay un T&S en el procesador 1 y el procesador 2 lee a mitad del T&S podria tener un valor distinto que si lee al final del T&S (condicion de carrera). Para solucionar esto, el T&S tiene que ser atomico para todos los procesadores.
 
 ### Desarrollar ReentrantLock que soporte locks recursivos.
 
@@ -63,7 +87,14 @@ bool empty(){return tail.get() - head.get() == 0};
 
 ### Defina la operación atómica TestAndSet (TAS)
 
-==TODO:==
+En pseudo-codigo:
+
+[deshabilitar interrupciones]
+viejo valor = x
+x = 1
+[habilitar interrupciones]
+xreturn viejo valor
+
 
 ### Provea dos implementaciones de un objeto lock basadas en TAS y argumente sobre sus ventajas y desventajas.
 
@@ -75,7 +106,7 @@ bool empty(){return tail.get() - head.get() == 0};
 
 ### Qué es la instrucción Test and Set? Para qué sirve? Justificar.
 
-==TODO:==
+Ver "¿Por qué es necesaria la primitiva Test & Set para la implementación de semáforos?"
 
 ### Dar dos soluciones (al menos una correcta) para el problema de la cena de los filósofos. Compararlas.
 
@@ -88,11 +119,11 @@ bool empty(){return tail.get() - head.get() == 0};
 P0                          |P1
 ----------------------------|----------------------------
 while(1) {                  | while(1) {
-  flag[0] = 1;              |   flag[1] = 1;
+  ## flag[0] = 1;           |   flag[1] = 1;
   waitfor(flag[1] == 0);    |   while(flag[0] == 1) {
                             |    flag[1] = 0;
                             |    waitfor(flag[0] == 0);
-                            |    flag[1] = 1;
+                            |    ## flag[1] = 1;
                             |   }
   /*Sección Crítica*/       |   /*Sección Crítica*/
   flag[0] = 0;              |   flag[1] = 0;

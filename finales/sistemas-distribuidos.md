@@ -1,5 +1,5 @@
-### Problema sobre un algoritmo de commit distribuido.
-
+﻿### Problema sobre un algoritmo de commit distribuido.
+	
 ==TODO:==
 
 ### Algoritmo para balancear la carga entre procesadores.
