@@ -1,24 +1,32 @@
 ﻿### ¿Qué desafíos enfrentan los algoritmos de scheduling para sistemas con varios procesadores?
 
+#### Nacho:
 Son 5 los desafios
 
-> Identificar: que parte de los procesos son paralelizables
+* Identificar: que parte de los procesos son paralelizables
 
-> Balance: asegurarse que cada parte haga un trabajo razonable. No tiene sentido separar una tarea en micro tareas que son demasiado pequeñas.
+* Balance: asegurarse que cada parte haga un trabajo razonable. No tiene sentido separar una tarea en micro tareas que son demasiado pequeñas.
 
-> Distribucion/Separacion de la informacion: que la data este bien separada para poder correr en las tareas paralelizadas.
+* Distribucion/Separacion de la informacion: que la data este bien separada para poder correr en las tareas paralelizadas.
 
-> Data dependency: si la informacion de una tarea depende de ejecutar antes otra tarea, esta tarea se tiene que ejecutar antes.
+* Data dependency: si la informacion de una tarea depende de ejecutar antes otra tarea, esta tarea se tiene que ejecutar antes.
 
-> Testear y debuggear: el espacio para testear se vuelve mucho mas grande si ademas de branches y paths tenes que considerar el paralelismo.  
+* Testear y debuggear: el espacio para testear se vuelve mucho mas grande si ademas de branches y paths tenes que considerar el paralelismo.  
+
+#### Eze:
+==TODO:==
 
 ### ¿Qué es el problema de inversión de prioridades y qué schedulers afecta?
 
-La inversion de prioridad es cuando una tarea de menor prioridad toma un recurso que una tarea de mayor prioridad. En este caso, la tarae de mayor prioridad tiene que esperar a la de menor prioridad (se invierten la prioridad). 
+#### Nacho:
+La inversion de prioridad es cuando una tarea de menor prioridad toma el control de un recurso que luego es solicitado por una tarea de mayor prioridad. Luego, la tarea de mayor prioridad tiene que esperar a que la de menor prioridad le libere el recurso, es decir, se invierten las prioridades. 
 
-El problema empeora si una tarea de prioridad media desaloja a la tarea de prioridad baja para robarle ese recurso. En este caso, la tarea de prioridad alta terminaria esperando a la tarea de prioridad media en su totalidad. 
+El problema empeora si una tarea de prioridad media desaloja a la tarea de prioridad baja. En este caso, la tarea de prioridad alta terminaria esperando a la tarea de prioridad media en su totalidad. 
 
 Para solucionar el caso anterior se utiliza el metodo de "herencia de prioridades". Esto quiere decir que si una tarea de prioridad alta esta esperando que una tarea de prioridad baja termine, esta tarea de prioridad baja pasa a tener prioridad alta momentaneamente. De esta manera, no podra ser desalojada por una tarea de prioridad media.
+
+#### Eze:
+==TODO:==
 
 ### Teniendo un algoritmo de scheduling al que los procesos le pueden pedir que se le agregue un quantum en determinado momento, y el scheduler te lo da sólo si eso ayuda al rendimiento total del sistema. ¿En que se tendría que fijar el scheduler para decidir si le corresponde quantum o no?
 
@@ -30,7 +38,7 @@ Para solucionar el caso anterior se utiliza el metodo de "herencia de prioridade
 
 ### ¿Puede haber inanición en MFQ (Multilevel Feedback Queue)? En caso afirmativo dar un ejemplo. En caso negativo, indicar el mecanismo que lo evita.
 
-No, MFQ tiene un mecanismo de aging que hace que las tareas que estan en colas de menor prioridad suban a otras colas de mayor prioridad si no fueron llamadas hace mucho tiempo. Esto evita que haya inaicion.
+No, MFQ tiene un mecanismo de aging que hace que las tareas que estan en colas de menor prioridad suban a otras colas de mayor prioridad si no fueron llamadas hace mucho tiempo. Esto evita que haya inanición.
 
 ### Defina la propiedad de carga.
 

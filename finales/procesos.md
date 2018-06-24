@@ -57,9 +57,13 @@ El manual de intel detalla un campo IOMAP en la TSS de una tarea, que sirve para
 
 ### ¿Qué son las funciones reentrantes y cuál es su relación con los threads? Dar dos ejemplos de transición de running a ready.
 
+#### Nacho:
 Una funcion re-entrante es una funcion cuyo cuerpo principal puede ser llamado nuevamente de forma segura mientras el mismo se esta ejecutando. El ejemplo clasico son las funciones iterativas, donde el mismo cuerpo se ejecuta muchas veces para completar una sola ejecucion.
 
-En el caso de los threads es importante por si se ejecuta muchas veces el mismo cuerpo en distintos threads, es clave saber que el codigo no genera ningun error.  
+En el caso de los threads es importante por si se ejecuta muchas veces el mismo cuerpo en distintos threads, es clave saber que el codigo no genera ningun error. 
+
+#### Eze:
+==TODO:==
 
 ### Se puede ir directo de waiting a running? Explicar las razones.
 
@@ -75,6 +79,9 @@ El cambio de modo es cuando se cambia el modo de ejecución, pasando de modo usu
 
 ### Dibujar el mapa de memoria de un proceso.
 
+#### Nacho:
+
+```
 *********
 *heap	*
 *------	*
@@ -83,6 +90,10 @@ El cambio de modo es cuando se cambia el modo de ejecución, pasando de modo usu
 *data	*
 *text	*
 *********
+```
+
+#### Eze:
+==TODO:==
 
 ### Qué pasa con la memoria cuando se crea un proceso hijo? Explicar los casos de fork() y vfork().
 

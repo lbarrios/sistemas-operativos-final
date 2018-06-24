@@ -26,6 +26,7 @@
 
 ### ¿Cuáles son las 4 condiciones de Koffman y para qué nos sirven?
 
+#### Nacho:
 Las cuatro condiciones de koffman dicen las pre-condiciones necesarias para generar un deadlock. Sirven por que dan cuatro vectores potenciales para evitar deadlocks, cualquier estrategia que ataque uno de estos cuatro puntos garantiza que el sistema ande bien. 
 
 Las 4 condiciones son:
@@ -38,8 +39,12 @@ Las 4 condiciones son:
 
 * Dependencia circular: debe haber una dependencia circular entre procesos. Es decir, debe ser posible formar un ciclo entre los recursos ya pedidos de los procesos y los necesarios para que termine.
 
+#### Eze:
+==TODO:==
+
 ### ¿Por qué es necesaria la primitiva Test & Set para la implementación de semáforos? ¿Alcanza con la primitiva T&S en arquitecturas multiprocesador? En caso afirmativo justificar. En caso negativo, proponer una solución.
 
+#### Nacho:
 La primitiva test and set le permite al procesador recibir un valor y modificarlo de forma atomica. Esto es necesario por que de ser una operacion que tome varios pasos, la operacion podria ser interrumpida en la mitad y esto generaria errores.
 
 Para tirar un ejemplo, supongamos que tenemos dos procesos, A y B, que quieren acceder al recurso x.
@@ -55,6 +60,9 @@ Hay dos potenciales problemas con usar Test & Set en multiprocesador:
 >  Otra forma seria teniendo un CACHE separado para todos los procesadores, que trabaje con los Test & Set. El problema con esta solucion es que seria mas caro de implementar. (se requiere mas hardware)
 
 B. Si (A) esta resulto, todavia tenemos el problema que la operacion Test & Set podria no ser atomica en multi processadores. Es decir, si hay un T&S en el procesador 1 y el procesador 2 lee a mitad del T&S podria tener un valor distinto que si lee al final del T&S (condicion de carrera). Para solucionar esto, el T&S tiene que ser atomico para todos los procesadores.
+
+#### Eze:
+==TODO:==
 
 ### Desarrollar ReentrantLock que soporte locks recursivos.
 
@@ -87,14 +95,19 @@ bool empty(){return tail.get() - head.get() == 0};
 
 ### Defina la operación atómica TestAndSet (TAS)
 
+#### Nacho:
 En pseudo-codigo:
 
+```
 [deshabilitar interrupciones]
 viejo valor = x
 x = 1
 [habilitar interrupciones]
 xreturn viejo valor
+```
 
+#### Eze:
+==TODO:==
 
 ### Provea dos implementaciones de un objeto lock basadas en TAS y argumente sobre sus ventajas y desventajas.
 
@@ -106,7 +119,11 @@ xreturn viejo valor
 
 ### Qué es la instrucción Test and Set? Para qué sirve? Justificar.
 
+#### Nacho:
 Ver "¿Por qué es necesaria la primitiva Test & Set para la implementación de semáforos?"
+
+#### Eze:
+==TODO:==
 
 ### Dar dos soluciones (al menos una correcta) para el problema de la cena de los filósofos. Compararlas.
 
