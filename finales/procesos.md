@@ -1,4 +1,4 @@
-### ¿Qué es y para qué sirve una System Call? Explicar los pasos involucrados por hardware y software. Ejemplificar.
+﻿### ¿Qué es y para qué sirve una System Call? Explicar los pasos involucrados por hardware y software. Ejemplificar.
 
 Una System Call es un mecanismo por el cual los procesos o tareas pueden solicitar servicios al Sistema Operativo. Este tipo de servicios pueden ser, por ejemplo, abrir/cerrar/leer/escribir sobre un descriptor, realizar un fork, pedir memoria, terminar el proceso, etc. A bajo nivel, pueden ser representados mediante una interrupción (ejemplo: INT 0x80 en la API de Linux) o mediante instrucciones específicas (ejemplo: la instrucción SYSCALL en Intel 64 bits).
 
@@ -57,7 +57,9 @@ El manual de intel detalla un campo IOMAP en la TSS de una tarea, que sirve para
 
 ### ¿Qué son las funciones reentrantes y cuál es su relación con los threads? Dar dos ejemplos de transición de running a ready.
 
-==TODO:==
+Una funcion re-entrante es una funcion cuyo cuerpo principal puede ser llamado nuevamente de forma segura mientras el mismo se esta ejecutando. El ejemplo clasico son las funciones iterativas, donde el mismo cuerpo se ejecuta muchas veces para completar una sola ejecucion.
+
+En el caso de los threads es importante por si se ejecuta muchas veces el mismo cuerpo en distintos threads, es clave saber que el codigo no genera ningun error.  
 
 ### Se puede ir directo de waiting a running? Explicar las razones.
 
@@ -73,7 +75,14 @@ El cambio de modo es cuando se cambia el modo de ejecución, pasando de modo usu
 
 ### Dibujar el mapa de memoria de un proceso.
 
-==TODO:==
+*********
+*heap	*
+*------	*
+*stack	*
+*------	*
+*data	*
+*text	*
+*********
 
 ### Qué pasa con la memoria cuando se crea un proceso hijo? Explicar los casos de fork() y vfork().
 
