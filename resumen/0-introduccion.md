@@ -141,4 +141,25 @@ Normalmente, existen dos formas de acceder a los dispositivos. La primera, es se
 
 ### Estructura de datos de un Kernel
 
+
 # Estructuras del Sistema Operativo
+
+## Servicios del SO
+
+## Usuario e Interfaz del SO
+
+## System Calls
+
+## Tipos de Syscalls
+
+## Programas de Sistemas
+
+## Diseño e Implementación
+
+## Estructura
+
+## Debugging
+
+## Generación
+
+## Booteo
