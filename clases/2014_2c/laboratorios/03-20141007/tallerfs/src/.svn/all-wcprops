@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/so/!svn/ver/7/2014_2c/laboratorios/03-20141007/tallerfs/src
+END
+ext2fs.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/so/!svn/ver/11/2014_2c/laboratorios/03-20141007/tallerfs/src/ext2fs.cpp
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/src/Makefile
+END
+hdd.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/src/hdd.cpp
+END
+mbr.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/src/mbr.cpp
+END
+pentry.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/src/pentry.cpp
+END

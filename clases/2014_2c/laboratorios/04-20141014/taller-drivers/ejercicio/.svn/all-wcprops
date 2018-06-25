@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio
+END
+fakedriver.c
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/fakedriver.c
+END
+fakeserial.mod.c
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/fakeserial.mod.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/Makefile
+END
+fakeserial.ko
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/fakeserial.ko
+END
+modules.order
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/modules.order
+END
+.fakeserialhelper.o.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/.fakeserialhelper.o.cmd
+END
+.fakeserial.o.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/.fakeserial.o.cmd
+END
+leerFakeSerial.sh
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/leerFakeSerial.sh
+END
+fakeserialhelper.c
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/fakeserialhelper.c
+END
+fakeserialhelper.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/fakeserialhelper.h
+END
+Module.symvers
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/Module.symvers
+END
+.fakeserial.ko.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/.fakeserial.ko.cmd
+END
+.fakedriver.o.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/.fakedriver.o.cmd
+END
+leerFakeSerialCount.sh
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/leerFakeSerialCount.sh
+END
+.fakeserial.mod.o.cmd
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/so/!svn/ver/11/2014_2c/laboratorios/04-20141014/taller-drivers/ejercicio/.fakeserial.mod.o.cmd
+END

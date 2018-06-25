@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/include
+END
+hdd.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/include/hdd.h
+END
+mbr.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/include/mbr.h
+END
+pentry.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/include/pentry.h
+END
+fs.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/include/fs.h
+END
+ext2fs.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/include/ext2fs.h
+END

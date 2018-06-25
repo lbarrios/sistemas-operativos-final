@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/so/!svn/ver/3/2014_2c/laboratorios/01-20140821/taller-syscalls/intro/src
+END
+execlp.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/so/!svn/ver/3/2014_2c/laboratorios/01-20140821/taller-syscalls/intro/src/execlp.c
+END
+fork.c
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/so/!svn/ver/3/2014_2c/laboratorios/01-20140821/taller-syscalls/intro/src/fork.c
+END
+wait.c
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/so/!svn/ver/3/2014_2c/laboratorios/01-20140821/taller-syscalls/intro/src/wait.c
+END

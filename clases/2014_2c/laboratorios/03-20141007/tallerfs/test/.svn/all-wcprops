@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/test
+END
+mount.sh
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/test/mount.sh
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/test/Makefile
+END
+testhdd
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/so/!svn/ver/11/2014_2c/laboratorios/03-20141007/tallerfs/test/testhdd
+END
+testhdd.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/so/!svn/ver/11/2014_2c/laboratorios/03-20141007/tallerfs/test/testhdd.cpp
+END
+hdd.raw.gz
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/so/!svn/ver/5/2014_2c/laboratorios/03-20141007/tallerfs/test/hdd.raw.gz
+END
