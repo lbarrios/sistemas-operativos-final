@@ -1,6 +1,5 @@
 ﻿### Temas:
 
-* [EZEGATO](eze_gato.md)
 * [Procesos](procesos.md)
 * [Sincronización](sincronizacion.md)
 * [Memoria](memoria.md)
