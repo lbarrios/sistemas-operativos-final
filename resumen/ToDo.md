@@ -6,14 +6,17 @@
 - [ ] Leer costo y prevención (cambio e contexto)
     - [ ] Leer Kloukinas, Yovine. 2011. A model-based approach for multiple QoS in scheduling: from models to implementation. http://goo.gl/4xL1JT
 - [ ] Leer IEEE 1003.1/2008 POSIX http://goo.gl/k7WGnP
+
 # 03-scheduling.pdf
 - [ ] 17 páginas
 	- [ ] Leer bibliografía adicional (no se cual es)
+
 # 04-teorica-sincronizacion-1.pdf
 - [ ] 43 páginas
 	- [ ] Completar Read-Modify-Write Atómicos
 	- [ ] Revisar Errores de sincronización
 	- [ ] Revisar semáforo (son atómicos?)
+
 # 05-teorica-sincronizacion-2.pdf
 - [ ] 29 páginas
 
