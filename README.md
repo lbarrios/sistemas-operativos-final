@@ -128,6 +128,8 @@ Repositorio para estudiar para el final de Sistemas Operativos
 ## Algunos links
 * http://www-03.ibm.com/ibm/history/exhibits/mainframe/mainframe_PP7090.html
 * http://www.bell-labs.com/history/unix/
+* https://www.inf.ed.ac.uk/teaching/courses/os/
+* https://myweb.ntut.edu.tw/~jhwang/OS/
 
 ## Opcionales:
 * UNIX Network Programming Volume 1, Second edition, W. Richard Stevens, Prentice Hall, 1998.
@@ -156,3 +158,5 @@ Repositorio para estudiar para el final de Sistemas Operativos
 
 # Bibliografía adicional
 * [Warwick University - Operating Systems Lectures](https://warwick.ac.uk/fac/sci/physics/research/condensedmatt/imr_cdt/students/david_goodwin/teaching/operating_systems/)
+
+
