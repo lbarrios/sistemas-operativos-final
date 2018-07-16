@@ -54,3 +54,127 @@ Trancisiones:
 * RUNNING -> BLOCKED: Cuando un proceso está corriendo, y realiza una llamada bloqueante (ejemplo, acceder a IO), se lo desaloja y su estado pasa a ser el de bloqueado (ya que no puede correr mientras esté esperando que finalice la llamada); de este modo, otro proceso que esté en READY puede correr.
 * BLOCKED -> READY: Cuando un proceso está bloqueado, y el recurso que estaba bloqueándolo se libera, entonces pasa a estar disponible nuevamente para su ejecución, por lo que su estado pasa a READY. No puede pasar directo a RUNNING nuevamente, ya que seguramente haya otro proceso en ejecución en ese momento.
 * RUNNING -> TERMINATED: Cuando un proceso está corriendo, y realiza una llamada a sistema para terminar, ejemplo EXIT(0), el estado pasa a terminated, mientras los recursos que tenía asignados son liberados.
+
+# Ejercicio 5
+	a) Utilizando únicamente la llamada al sistema fork(), escribir un programa tal que construya un
+	árbol de procesos que represente la siguiente genealogía: Abraham es padre de Homer, Homer es
+	padre de Bart, Homer es padre de Lisa, Homer es padre de Maggie. Cada proceso debe imprimir
+	por pantalla el nombre de la persona que representa.
+
+	b) Modificar el programa anterior para que cumpla con las siguientes condiciones: 1) Homer termine
+	sólo después que terminen Bart, Lisa y Maggie, y 2) Abraham termine sólo después que termine
+	Homer.
+
+```c++
+void maggie() {
+	print("Maggie");
+	exit(0);
+}
+void lisa() {
+	print("Lisa");
+	exit(0);
+}
+void bart() {
+	print("Bart");
+	exit(0);
+}
+void homero() {
+	printf("Abraham");
+	pid bart = fork();
+	if (bart == 0) {
+		bart();
+	}
+	pid lisa = fork();
+	if (lisa == 0) {
+		lisa();
+	}
+	pid maggie = fork();
+	if (maggie == 0) {
+		maggie();
+	}
+	wait_for_child(bart);
+	wait_for_child(lisa);
+	wait_for_child(maggie);
+	exit(0)
+}
+void abraham() {
+	printf("Abraham");
+	pid homero = fork();
+	if (homero == 0) {
+		homero();
+	}
+	wait_for_child(homero);
+	exit(0)
+}
+
+void main() {
+	abraham();
+}
+```
+# Ejercicio 6
+	El sistema operativo del punto anterior es extendido con la llamada al sistema 
+	void exec(const char *arg). Esta llamada al sistema reemplaza el programa actual por el código
+	localizado en el string. Implementar la llamada al sistema void system(const char *arg) usando
+	las llamadas al sistema ofrecidas por este sistema operativo.
+
+```c++
+void system(const char *arg) {
+	pid child = fork();
+	if (pid == 0) {
+		exec(arg);
+	} else {
+		wait_for_child(child);
+	}
+}
+```
+
+# Ejercicio 7
+
+**a) ¿Qué variables deben residir en el área de memoria compartida?**
+tiki y taka
+
+**b) ¿Existe alguna variable que no deba residir en el espacio de memoria compartida?**
+temp
+
+**c) Escribir un procedimiento main() para el problema del tiki-taka usando el código presentado y las
+llamadas al sistema para comunicación entre procesos provistas por este sistema operativo.**
+
+```c++
+#define SIZE 5
+int tiki;
+int taka;
+int temp;
+
+void taka_runner() {
+	while (true) {
+		temp = tiki;
+		temp++;
+		taka = temp;
+	}
+}
+
+void tiki_taka() {
+	while (true) {
+		temp = taka;
+		temp++;
+		tiki = temp;
+	}
+}
+
+void main() {
+	share_mem(tiki);
+	share_mem(taka);
+	pid tiki = fork();
+	if (tiki==0) {
+		tiki_taka();
+	} else {
+		pid taka = fork();
+		if (taka==0) {
+			taka_runner();
+		} else {
+			wait_for_child(taka);
+		}
+		wait_for_child(tiki);
+	}
+}
+```
