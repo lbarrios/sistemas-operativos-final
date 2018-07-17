@@ -178,3 +178,69 @@ void main() {
 	}
 }
 ```
+
+
+# Ejercicio 8
+
+a)
+
+```c++
+void main () {
+	pid padre = get_current_pid();
+	pid hijo = fork();
+	pid el_otro = (hijo!=0)?hijo:padre;
+	int msg;
+
+	if(hijo!=0) {
+		bsend(hijo, 0);
+	}
+	
+	while (true) {
+		msg = breceive(hijo);
+		bsend(hijo, msg+1);
+	}
+	
+	if(hijo!=0) {
+		wait_for_child(hijo);
+	}
+}
+```
+
+b, c)
+
+```c++
+void enviar_y_recibir (pid src, pid dst) {
+	int msg;
+	while (true) {
+		msg = breceive(src);
+		bsend(dst, msg+1);
+	}
+}
+
+void main () {
+	pid padre, hijo1, hijo2;
+	share_mem(&padre);
+	share_mem(&hijo1);
+	share_mem(&hijo2);
+
+	padre = get_current_pid();
+
+	hijo1 = fork();
+	if(hijo1==0){
+		enviar_y_recibir(padre, hijo2);
+		exit(0);
+	}
+
+	hijo2 = fork();
+	if(hijo2==0){
+		enviar_y_recibir(padre, hijo1);
+		exit(0);
+	}
+
+	bsend(hijo1, 0);
+	enviar_y_recibir(hijo1, hijo2);
+	wait_for_child(hijo1);
+	wait_for_child(hijo2);
+	exit(0);
+}
+```
