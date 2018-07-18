@@ -25,6 +25,8 @@
 
 # 07-teorica-administracion-de-memoria.pdf
 - [ ] 44 páginas
+	- [ ] ¿Qué es splitting de bloques?
+	- [ ] Leer "Design of a General Purpose Memory Allocator for the 4.3BSD UNIX Kernel", de MK McKusick y J Karels.
 
 # 08-teorica-administracion-de-entrada-salida.pdf
 - [ ] 35 páginas
