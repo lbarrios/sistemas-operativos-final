@@ -320,8 +320,93 @@ void proceso_derecha() {
 En un OS que sólamente implementara pipes como sistema de IPC, habrían determinadas tareas que no se podrían realizar de forma sencilla y performante. Por ejemplo, si muchos procesos quieren acceder a una gran cantidad de datos, para hacer mayoritariamente lecturas (y cada tanto alguna escritura), un sistema de Memoria Compartida sería muy útil, ya que todas las lecturas se podrían realizar concurrentemente. Si se quisiera implementar lo mismo con pipes, tendría que haber un proceso que sea el dueño de esa memoria, y la vaya pasando a los otros procesos a través de mensajes o, peor aún, cada proceso tendría que tener su copia de la memoria, y cada vez que algún proceso modificase algo le tendría que informar al resto (en este caso se terminaría implementando una especie de memoria compartida sobre pipes, ya que sería necesario implementar mecanismos de exclusión mutua mediante mensajes). Los sockets son parecidos a los pipes, pero tendrían algunas ventajas, como que procesos que se encuentren en distintas computadoras, o que se encuentren en la misma computadora pero que en principio no conozcan nada uno del otro (más allá del protocolo de comunicación), podrían comunicarse entre sí. Con sockets es mucho más sencillo implementar un mecanismo de servidor-cliente, en donde un servidor atienda a una cantidad N de clientes genéricos, ya sean estos procesos locales o remotos.
 
 # Ejercicio 13
-```Pensar un escenario donde tenga sentido que dos procesos (o aplicaciones) tengan entre sí un canal
-de comunicaciones bloqueante y otro no bloqueante. Describir en pseudocódigo el comportamiento de
-esos procesos.```
 
-TODO: no tuve ganas de hacerlo
+Un proceso que le envíe sus logs a otro proceso, para su posterior almacenamiento, no necesita utilizar un canal bloqueante, ya que si el otro proceso no lo necesita inmediatamente, simplemente lo puede ir dejando en un buffer, y que los vaya recogiendo a medida que se generen. Ahora bien, si ese mismo proceso necesita consultar una determinada línea del log, tiene sentido que la llamada sea bloqueante.
+
+```c++
+guardar_log(char* buffer){
+    while(!send(LOGGER_PID, buffer)){}
+}
+
+consultar_log(char* buffer){
+    breceive(LOGGER_PID, buffer);
+}
+```
+
+# Ejercicio 14
+
+El comportamiento esperado del siguiente programa es que el proceso hijo envíe el mensaje “hola”
+al proceso padre, para que luego el proceso padre responda “chau”. Encontrar un defecto en esta
+implementación y solucionarlo.
+
+```c++
+void main() {
+    pid shared_parent_pid = get_current_pid();
+    mem_share(&shared_parent_pid);
+
+    pid child = fork();
+    if (child == 0) {
+        bsend(shared_parent_pid, "hola");
+        breceive(shared_parent_pid);
+        exit(OK);
+    }
+
+    breceive(child);
+    bsend(child, "chau");
+    exit(OK);
+}
+```
+
+# Ejercicio 15
+
+```
+Escribir el código de un programa que se comporte de la misma manera que la ejecución del
+comando “ls -al | wc -l” en una shell. No está permitido utilizar la función system, y cada uno
+de los programas involucrados en la ejecución del comando deberá ejecutarse como un subproceso.
+```
+
+```c++
+#define PIPE_READ 0
+#define PIPE_WRITE 1
+
+void cmd1(int* pipe) {
+    // Redirect STDOUT -> pipe
+    dup2(pipe[PIPE_WRITE], STDOUT_FILENO);
+    // Run command
+    cmd = "ls -al";
+    exec(cmd);
+    exit(0);
+}
+
+void cmd2(int* pipe) {
+    // Redirect pipe -> STDIN
+    dup2(pipe[PIPE_READ], STDIN_FILENO);
+    // Run command
+    cmd = "wc -l";
+    exec(cmd);
+    exit(0);
+}
+
+void main() {
+    int pipe[];
+    pipe(pipe);
+
+    hijo1 = fork();
+    if(hijo1==0){
+        cmd1(pipe);
+    }
+
+    hijo2 = fork();
+    if(hijo2==0){
+        cmd2(pipe);
+    }
+}
+```
+
+# Ejercicio 16
+
+==TODO:==
+
+# Ejercicio 17
+
+==TODO:==
