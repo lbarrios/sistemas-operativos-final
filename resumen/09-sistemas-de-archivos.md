@@ -35,14 +35,14 @@
 
 ## Responsabilidades de un Filesystem:
 
-* **Organización lógica** de los archivos (visible desde fuera).
+* ### **Organización lógica** de los archivos (visible desde fuera).
 	* Organización interna: cómo se estructura la información dentro del archivo. 
 		* Ejemplo, en Windows y Unix por lo general se usa secuencia de a bytes. Esto significa que la responsabilidad de organizar el archivo internamente es del usuario.
 	* Organización externa: cómo se ordenan y distribuyen los distintos archivos. 
 		* Hoy en día la mayoría de los Filesystem adhieren al concepto de directorios, conformando una organización jerárquica, con forma de arbol.
 		* Casi todos soportan, además, una noción de link: un alias para un mismo archivo (es decir, el mismo archivo físico aparece como dos archivos lógicos distintos).
 		* Con esta última noción, la estructura deja de ser un árbol, y se transforma en un grafo dirigido, introduciendo la posibilidad de que existan ciclos.
-* Nombre y ruta de los archivos.
+* ### Nombre y ruta de los archivos.
 	* Caracteres de separación de directorios, ejemplo "/" (Linux) o "\" (Windows).
 	* Extensión de los archivos.
 	* Restricciones de longitus, y caracteres permitidos (ejemplo acentos).
@@ -53,15 +53,15 @@
 		* C:\Program Files\Antivirus\Antivirus.exe
 		* \\SERVIDOR3\Parciales\parcial1.doc
 		* servidor4:/ejercicios/practica3.pdf
-* Punto de montaje.
+* ### Punto de montaje.
 	* A partir de qué nombre en la ruta se considera que un dispositivo está montado.
 	* En Unix, se realiza mediante el comando mount.
 	* Ejemplo: `mount /dev/sda1 /media/disco1` va a montar la primera partición del disco `sda` en la ruta `/media/disco1`. O sea que si existe el archivo `/carpeta/pepito.txt` en este disco, se va a poder acceder mediante la ruta `/media/disco1/carpeta/pepito.txt`.
-* Representación del archivo (¡Importante!)
+* ### Representación del archivo (¡Importante!)
 	* Esto es la organización lógica interna (no visible desde fuera del filesystem)
 	* ¿El archivo está todo junto, o se divide en partes?
-* Gestión del espacio libre.
-* Metadatos.
+* ### Gestión del espacio libre.
+* ### Metadatos.
 
 La forma de manejar muchas de estas responsabilidades determinan las características, las ventajas y desventajas, de cada filesystem, principalmente en cuanto a su rendimiento, usabilidad y confiabilidad.
 
@@ -80,7 +80,7 @@ La forma de manejar muchas de estas responsabilidades determinan las caracterís
 	* Las lecturas aleatorias son muy lentas.
 	* Se desperdicia un espacio constante en cada bloque para indicar cuál es el siguiente.
 
-### Solución de DOS, FAT: 
+* ### Solución de DOS, FAT: 
 	* Una forma de mejorar esto es mediante una tabla global que me indique, para cada bloque, dónde está el bloque siguiente.
 	* No desperdicio espacio interno del bloque.
 	* Al tener la tabla en memoria, puedo leer los bloques fuera de orden.
@@ -90,21 +90,21 @@ La forma de manejar muchas de estas responsabilidades determinan las caracterís
 	* Es poco robusto, toda la tabla está en memoria.
 	* Además, no maneja permisos/seguridad.
 
-### Solución de Unix, Inodos:
-* Cada archivo tiene un inodo.
-* El inodo tiene metadatos / atributos (tamaños, permisos, etc).
-* También tiene las direcciones de algunos bloques de acceso directo, permitiendo acceder rápidamente a archivos pequeños (ejemplo, con bloques de 8KB, se puede acceder hasta 96 KB).
-* Tiene una entrada llamada Single Indirect Block, que apunta a un bloque que contiene punteros a bloques de datos. Siguiendo el ejemplo anterior, esto permite manejar archivos de hasta 16 MB.
-* Tiene otra entrada llamada Double Indirect Block, que apunta a un bloque que contiene punteros a Single Indirect Blocks. Permite manejar archivos de hasta 32 GB.
-* Tiene otra entrada llamada Triple Indirect Block, que apunta a un bloque que contiene punteros a Double Indirect Blocks. Permite manejar archivos de hasta 70 TB.
-* Permite tener en memoria sólamente los inodos correspondientes a archivos abiertos.
-* Genera menos contención.
-* Consistencia/robustez, sólo están en memoria los inodos de los archivos abiertos.
+* ### Solución de Unix, Inodos:
+	* Cada archivo tiene un inodo.
+	* El inodo tiene metadatos / atributos (tamaños, permisos, etc).
+	* También tiene las direcciones de algunos bloques de acceso directo, permitiendo acceder rápidamente a archivos pequeños (ejemplo, con bloques de 8KB, se puede acceder hasta 96 KB).
+	* Tiene una entrada llamada Single Indirect Block, que apunta a un bloque que contiene punteros a bloques de datos. Siguiendo el ejemplo anterior, esto permite manejar archivos de hasta 16 MB.
+	* Tiene otra entrada llamada Double Indirect Block, que apunta a un bloque que contiene punteros a Single Indirect Blocks. Permite manejar archivos de hasta 32 GB.
+	* Tiene otra entrada llamada Triple Indirect Block, que apunta a un bloque que contiene punteros a Double Indirect Blocks. Permite manejar archivos de hasta 70 TB.
+	* Permite tener en memoria sólamente los inodos correspondientes a archivos abiertos.
+	* Genera menos contención.
+	* Consistencia/robustez, sólo están en memoria los inodos de los archivos abiertos.
 
-#### Inodos: Directorios
-* Un inodo es una entrada al **ROOT DIRECTORY**.
-* Por cada archivo en ese directorio, hay una entrada.
-	* En ese bloque se guarda una lista de (inodos, nombre de archivo).
+	* #### Inodos: Directorios
+		* Un inodo es una entrada al **ROOT DIRECTORY**.
+		* Por cada archivo en ese directorio, hay una entrada.
+			* En ese bloque se guarda una lista de (inodos, nombre de archivo).
 
 ==TODO: REPASAR ESTO==
 
