@@ -9,6 +9,33 @@
 	* archivo.tex: archivo de LaTeX
 	* archivo.c: archivo de código fuente en C
 
+### Atributos de un Archivo:
+* Nombre: ejemplo "archivo.txt"
+* Identificador: identificador único de archivo, interno al sistema operativo
+* Tipo: si pueden haber distintos tipos de archivo (ejemplo archivo o carpeta), es necesario identificarlos
+* Ubicación: dónde está guardado el archivo (dispositivo) y en qué ruta.
+* Tamaño: el tamaño del archivo
+* Proteción: ACL, usuarios, permisos (lectura, escritura, ejecución), etc
+* Fechas: creación, modificación, acceso, etc
+* Atributos extendidos: checksum, encoding (ej: TF8), etc
+* Toda esta información se almacena en el **Directory Structure** del FileSystem.
+
+### Operaciones de un Archivo:
+    El archivo se puede ver como un tipo abstracto de datos.
+    En ese sentido, es definido a través de sus operaciones.
+
+Ejemplos:
+* create: crear el archivo
+* read: leer de un archivo
+* write: escribir en un archivo
+* seek: moverse a través de un archivo
+* delete: eliminar un archivo
+* truncate: truncar un archivo (eliminar a partir de una posición)
+* append: escribir en un archivo a partir del final
+* rename: renombrar un archivo
+* copy: copiar un archivo
+* lock: bloquear un archivo (para que otros no lo usen)
+
 ## Filesystems:
 	El filesystem es un módulo del kernel.
 
