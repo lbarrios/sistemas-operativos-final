@@ -245,3 +245,22 @@ El rendimiento de un FS se ve afectado por muchos factores.
     * Estabilidad
     * Robustez
     * Mantenibilidad
+
+## NFS: Network File System
+* Permite acceder a un FS remoto, como si fuera local.
+    * Utiliza RPC.
+    * Esto se hace de forma transparente.
+    * El NFS se monta en un mountpoint, como cualquier otro FS, y las aplicaciones no saben que es remoto.
+* Para funcionar, requiere de una capa adicional del SO, llamada VFS (Virtual File System).
+    * Esta capa tiene _vnodes_ por cada archivo abierto.
+    * Cada vnode se corresponde con un inode si el archivo es local.
+    * Si el archivo es remoto, se almacenan metadatos adicionales.
+    * De este modo, los pedidos que llegan al VFS son despachados al FS real, o al NFS.
+    * Cada FS a su vez se encarga de los detalles implementativos del pedido (ej, NFS maneja el protocolo de red necesario para enviar el RPC)
+* Es similar a otros sistemas distribuidos.
+* NFS no es 100% distribuído.
+    * Todos los datos de un mountpoint deben pertenecer al mismo "medio físico".
+    * AFS o Coda son realmente distribuídos.
+
+## EXT2
+==TODO: PROFUNDIZAR ESTO CON BIBLIOGRAFIA==
