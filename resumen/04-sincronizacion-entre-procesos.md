@@ -18,9 +18,9 @@ mediante ==secciones críticas== (CRIT).
 ### Sección Crítica
 Es un pedazo de código tal que se cumple
 
-- sólo hay un proceso en CRIT
-- todo proceso esperando para CRIT va a entrar
-- ningún proceso fuera de CRIT puede bloquear a otro
+1. sólo hay un proceso en CRIT
+2. todo proceso esperando para CRIT va a entrar
+3. ningún proceso fuera de CRIT puede bloquear a otro
 
 Un proceso puede:
 
@@ -36,7 +36,7 @@ y es necesario utilizar hardware adicional.
 > Este es un mecanismo provisto por el procesador, de forma 
 > que resulta ==atómico/indivisible y libre de bloqueos==.
 
-```
+```c++
 private atomic <bool> reg;
 atomic bool get () {return reg;}
 atomic void set(bool b) {reg = b;}
@@ -59,7 +59,7 @@ atomic bool testAndSet () {
 - la espera no es acotada
 
 
-```
+```c++
 public class TASLock {
     private atomic <bool > reg;
     public void create () {
@@ -88,7 +88,8 @@ que el de usar semáforos.==
 - Poner un sleep() en el cuerpo del while
 	- poco tiempo -> desperdicia CPU
 	- mucho tiempo -> mucha espera
-```
+
+```c++
 void lock (time delay) {
     while (reg.testAndSet()) {sleep(delay);}
 }
@@ -104,7 +105,7 @@ antes de intentar el lock (ver TTAS-Lock)
 > de forma tal que sólamente cuando el get() devuelva falso, se 
 > intentará hacer el TAS.
 
-```
+```c++
 void create() {
     mutex.set(false);
 }
@@ -131,7 +132,7 @@ void unlock() {
 ### Otros objetos atómicos
 > Read-Modify-Write Atómicos
 
-```
+```c++
 /**
  * Obtiene un valor y lo incrementa en 1
  * (devuelve el valor original)
@@ -194,7 +195,7 @@ atomic bool dequeue(T *pitem) {
 - ==wait()== (P() o down()): Esperar hasta que se pueda entrar.
 - ==signal()== (V() o up()): Salir y dejar entrar a alguno.
 
-```
+```c++
 void wait () {
 // adquirir lock del kernel
     

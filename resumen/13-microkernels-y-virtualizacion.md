@@ -119,8 +119,24 @@ Algunas ideas se salvaron.
 	* La idea es que el CPU salga automáticamente del modo VMX non-root cuando el huésped realice alguna acción "prohibida" de acuerdo a la VMCS.
 		* En ese momento el controlador de VM recibe el control, y emula, ignora o termina la acción prohibida.
 
-## Desafíos/Problemas
+## Desafíos / Problemas
 
 * Los sistemas operativos tienen optimizaciones que suponen que están en una máquina real.
 	* Por ejemplo, el Kernel y el FS están optimizados para acceder al disco de forma eficiente.
 	* La administración de memoria y scheduler de CPU suponen que la carga que ven es la real del hardware. Si no cuentan con esa información, pueden terminar tomando decisiones que impacten en la performance del sistema.
+* Contención: al estar todo en una misma máquina física, hay un único punto de falla.
+
+## Escenarios de uso / Ventajas
+
+* Correr sistemas viejos o legacy.
+* Aprovechamiento del equipamiento.
+* Desarrollo / Testing / Debugging.
+* Abaratar costos.
+	* Maximizar la utilización del HW.
+
+## Bibliografía
+
+- http://www.cs.cornell.edu/home/ulfar/ukernel/ukernel.html
+- “Formal Requirements for Virtualizable Third Generation Architectures”, de Popek y Goldberg.
+- “Intel Virtualization Technology: Hardware Support for Efficient Processor Virtualization”. http://www.intel.com/technology/itj/2006/v10i3/1-hardware/1-abstract.htm
+- “A comparison of software and hardware techniques for x86 virtualization”, de Adams y Agesen.
