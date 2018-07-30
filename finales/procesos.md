@@ -63,7 +63,9 @@ Una funcion re-entrante es una funcion cuyo cuerpo principal puede ser llamado n
 En el caso de los threads es importante por si se ejecuta muchas veces el mismo cuerpo en distintos threads, es clave saber que el codigo no genera ningun error. 
 
 #### Eze:
-==TODO:==
+Una función reentrante es una función que está pensada para soportar la interrupción de la misma antes de que finalice, y que sea llamada de forma concurrente desde otro contexto, sin que eso genere corrupción de datos / condiciones de carrera / etc. Es un problema que se da en sistemas multitarea con programas single-thread, por ejemplo, al programar una syscalls o bibliotecas compartidas. Una forma de hacer funciones reentrantes es protegiendo el acceso a las secciones críticas (ej, variables globales) mediante mecanismos de exclusión mútua.
+
+En el caso de contar con un proceso multi-thread, también es un problema, ya que las ejecuciones concurrentes pueden ocasionar el comportamiento descripto. Por otro lado, que una función sea reentrante no significa que sea thread safe. Que una función sea thread safe implica que el acceso a la sección crítica se realiza de forma serializada, mientras que en una función reentrante se pide algo más débil (que la función pueda ser interrumpida y llamada nuevamente).
 
 ### Se puede ir directo de waiting a running? Explicar las razones.
 
