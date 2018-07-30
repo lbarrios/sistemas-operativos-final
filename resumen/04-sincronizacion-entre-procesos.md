@@ -112,7 +112,7 @@ void create() {
 
 void lock () {
     do {
-        while (mutex.get()){
+        while (mutex.get()) {
             // busy waiting
         }
     } while (!mutex.testAndSet());
