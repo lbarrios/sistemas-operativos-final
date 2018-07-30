@@ -14,7 +14,12 @@ Son 5 los desafios
 * Testear y debuggear: el espacio para testear se vuelve mucho mas grande si ademas de branches y paths tenes que considerar el paralelismo.  
 
 #### Eze:
-==TODO:==
+
+* Afinidad: Definir la afinidad de los procesos a los distintos procesadores.
+	* ¿Usar afinidad dura o afinidad blanda?
+	* Caché: Migrar un proceso es costoso, porque se desperdicia caché de un procesador, y en el otro hay que leer todo nuevamente.
+* Balance de carga: Distribución adecuada de la carga entre los múltiples procesadores. 
+	* Por ejemplo, no me sirve un scheduler que asigna todos los procesos a un único procesador mientras el resto no hacen nada.
 
 ### ¿Qué es el problema de inversión de prioridades y qué schedulers afecta?
 
@@ -26,7 +31,15 @@ El problema empeora si una tarea de prioridad media desaloja a la tarea de prior
 Para solucionar el caso anterior se utiliza el metodo de "herencia de prioridades". Esto quiere decir que si una tarea de prioridad alta esta esperando que una tarea de prioridad baja termine, esta tarea de prioridad baja pasa a tener prioridad alta momentaneamente. De esta manera, no podra ser desalojada por una tarea de prioridad media.
 
 #### Eze:
-==TODO:==
+El problema de inversión de prioridades es cuando un proceso de prioridad alta requiere de un recurso que tiene un proceso de prioridad baja. Entonces, la ejecución del proceso de prioridad alta está supeditada a la del de prioridad baja, es decir, se genera una dependencia que si no es bien manejada puede terminar en deadlock, y en casos no tan graves que la ejecución de una tarea crítica se retarde de una manera inaceptable.
+
+Supongamos que entra en juego un proceso de prioridad media. El scheduler le va a dar prioridad a la ejecución de este proceso sobre la del de prioridad baja, ocasionando que el proceso de prioridad baja no se ejecute y no libere el recurso que necesita el proceso de prioridad alta. Esto termina generando que el proceso de prioridad media termine teniendo, en un sentido práctico, más prioridad que el de prioridad alta.
+
+Dicho de otro modo, se termina generando un riesgo de inanición en el proceso de prioridad alta.
+
+En principio afecta a los schedulers que usan distintas colas de prioridad, ya que en un scheduler con prioridad única, como RoundRobin, la ejecución del proceso de prioridad baja eventualmente va a terminar.
+
+Formas de solucionarlo son, por ejemplo, utilizar herencia de prioridades, en donde cuando un proceso de prioridad alta solicita un recurso que tiene asignado un proceso de prioridad baja, este último pasa a tener prioridad alta temporalmente (hasta que libere el recurso). Otrá forma posible sería hacer preemption, es decir, que de algún modo el proceso de prioridad alta pueda solicitar la liberacioń inmediata de un recurso que necesita y que otro proceso de menor prioridad esté bloqueando. Esto último suena un poco violento, pero puede llegar a tener sentido en algunos sistemas críticos, ejemplo un sistema RT de un vehículo autónomo en donde un proceso de prioridad máxima se encargue de controlar el frenado del vehículo ante un riesgo de colision: en tal caso, no debería importar si otro proceso está bloqueando las ruedas, porque frenar el vehículo es urgente.
 
 ### Teniendo un algoritmo de scheduling al que los procesos le pueden pedir que se le agregue un quantum en determinado momento, y el scheduler te lo da sólo si eso ayuda al rendimiento total del sistema. ¿En que se tendría que fijar el scheduler para decidir si le corresponde quantum o no?
 

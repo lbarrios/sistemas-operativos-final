@@ -95,7 +95,29 @@ El cambio de modo es cuando se cambia el modo de ejecución, pasando de modo usu
 ```
 
 #### Eze:
-==TODO:==
+```
++ HIGHER ADDRESSES
+
+------- <- bottom
+ STACK      <- Variable Size (grows down --)
+------- <- top
+   .    \   
+   .     \  
+   .      | <- Free Space
+   .     /  
+   .    /   
+-------
+  HEAP      <- Variable Size (grows up ++)
+-------
+  BSS       <- Fixed Size
+-------
+  DATA      <- Fixed Size
+-------
+  TEXT      <- Fixed Size
+-------
+
+- LOWER ADDRESSES
+```
 
 ### Qué pasa con la memoria cuando se crea un proceso hijo? Explicar los casos de fork() y vfork().
 
