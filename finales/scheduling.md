@@ -51,7 +51,7 @@ Formas de solucionarlo son, por ejemplo, utilizar herencia de prioridades, en do
 
 ### ¿Puede haber inanición en MFQ (Multilevel Feedback Queue)? En caso afirmativo dar un ejemplo. En caso negativo, indicar el mecanismo que lo evita.
 
-No, MFQ tiene un mecanismo de aging que hace que las tareas que estan en colas de menor prioridad suban a otras colas de mayor prioridad si no fueron llamadas hace mucho tiempo. Esto evita que haya inanición.
+No, MFQ tiene un mecanismo de **aging** que hace que las tareas que estan en colas de menor prioridad suban a otras colas de mayor prioridad si no fueron llamadas hace mucho tiempo. Esto evita que haya inanición.
 
 ### Defina la propiedad de carga.
 

@@ -36,7 +36,20 @@ El de linux lo conoces "[tipo] usuario[r w x] grupo[r w x] otro[r w x]". (tipo p
 El resumen que encontre dice que windows usa MAC (Mandatory Access Control). La idea de MAC es que hay jerarquias de control, y cada usuario puede correr aplicaciones o acceder a archivos que tengan una jerarquia igual o menor a la suya. Hay 4 jerarquias: sistema, alta, media y baja.
 
 #### Eze:
-==TODO:==
+
+* DAC = Discretionary Access Control. Significa que cada usuario puede definir los permisos sobre los objetos de los cuales es propietario (en realidad, con la definición más amplia de DAC, cualquier usuario debería poder definir los permisos, o en todo caso podría existir un permiso que sea justamente la "definición de nuevos permisos").
+
+En Unix la administración de permisos se realiza, por cada archivo, asignando los siguientes bits:
+```
+rwxrwxrwx
+|u||g||o|
+
+u = user
+g = group
+o = other
+```
+
+En Windows, en cambio, a cada archivo se le asignan los permisos a los grupos o usuarios que se requieran. Esto se combina a su vez con MAC, en donde los archivos tienen niveles de integridad: sistema, alta, media y baja.
 
 ### ¿Se puede considerar al deadlock como un problema de seguridad?
 
@@ -46,7 +59,8 @@ El resumen que encontre dice que windows usa MAC (Mandatory Access Control). La 
 Si tenemos en cuenta que los DDOS son considerados fallas de seguridad, tambien tendrian que serlo los deadlocks. Si como usuario hostil puede imponer un deadlock, el sistema dejaria de funcionar de forma correspondiente.
 
 #### Eze:
-==TODO:==
+
+Sí.
 
 ### Explicar una API general para una encriptación asimétrica y las características generales de la implementación.
 
