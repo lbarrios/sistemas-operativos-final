@@ -495,3 +495,90 @@ R2       R1
    >   /
      P2
 ```
+
+
+==TODO: Completar==
+
+## Registros Atómicos
+
+### Exclusión Mútua
+
+* Teorema de Burns & Lynch: El mínimo número de registros atómicos necesarios para garantizar exclusión mútua sin restricciones de tiempo es N.
+
+* Algoritmo de Fischer: Se asumen restricciones de tiempo. Suponiendo FAIRNESS, garantiza LOCK-FREEDOM si ∆ > δ.
+
+```c++
+void proceso(int i){
+    // TRY
+    while(turn!=i){
+        waitfor(turn==0);
+        turn = i;           // tarda a lo sumo T
+        pause(W);       // espera un tiempo W > T
+    }
+    
+    // CRIT
+    …
+
+    // EXIT
+    turn = 0
+}
+```
+
+* Algoritmo de Dijkstra: Garantiza EXCL. Suponiendo FAIRNESS, garantiza LOCK-FREEDOM, pero no WAIT-FREEDOM.
+
+```c++
+/*
+Registros
+        * flag[i]: atomic single-writer / multi-reader
+        * turn: atomic multi-writer / multi-reader
+*/
+
+void proceso(int i){
+    // TRY
+    flag[i] = 1;
+    while(turn != i) {
+        if(flag[turn]==0){
+            turn = i ;
+        }
+    }
+    flag[i] = 2;
+
+    foreach(j!=i) {
+        if (flag [j] == 2) goto TRY;
+    }
+
+    /* CRIT */
+    ...
+    
+    /* EXIT */
+    flag[i] = 0;
+
+```
+}
+
+* Panadería de Lamport:
+
+```c++
+/*
+Registros:
+    choosing[i], number[i]: atomic single-writer / multi-reader
+*/
+
+/* TRY */
+choosing[i] = 1;
+number[i] = 1 + max{j!=i}(number [j]);
+choosing[i] = 0;
+foreach j != i {
+    waitfor choosing [j]==0;
+    waitfor number [j]==0 || (number[i], i) < (number[j] , j);
+}
+
+/* CRIT */
+...
+
+/* EXIT */
+number [i] = 0;
+```
+
+### Consenso
+* Teorema Herlihy & Lynch: No se puede garantizar consenso para un n arbitrario con registros RW atómicos.
