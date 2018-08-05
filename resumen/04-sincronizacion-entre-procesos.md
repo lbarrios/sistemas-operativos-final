@@ -318,7 +318,7 @@ R ->try-> T ->crit-> C ->exit-> E
 > Para toda ejecución T y estado T_k, no puede 
 > haber más de un proceso i tal que T_k(i) = C.
 
-- #CRIT ≤ 1
+- \#CRIT ≤ 1
 
 #### Progreso (PROG)
 > Para toda ejecución τ y estado τ_k, 

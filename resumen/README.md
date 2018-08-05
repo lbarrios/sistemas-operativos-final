@@ -1,3 +1,12 @@
+## Cómo generar HTML
+* `pip install markdown`
+* `pip install pygments`
+* `pip install pymdown-extensions`
+
+```sh
+./generar_html.py
+```
+
 ## Temas:
 * [Introducción](01-introduccion.md)
 * [Procesos y API](02-procesos-y-api.md)
